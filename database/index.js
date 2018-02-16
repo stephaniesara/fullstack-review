@@ -55,32 +55,9 @@ let save = (data, callback) => {
 			} else {
 				callback(null, 'ALREADY IN DB, DID NOT SAVE')
 			}
-
+			
   	}
   })
-
-  // data.forEach((elem) => {
-  // 	var repo = new Repo({
-  // 		name: elem.name,
-  // 		owner: elem.owner.login,
-  // 		URL: elem.html_url,
-  // 		stargazers: elem.stargazers_count
-  // 	});
-
-  // 	repo.save((err, repo) => {
-  // 		if (err) {
-  // 			callback('error!', null);
-  // 		}
-  // 	});
-  // 	// console.log(repo);
-  // });
-
-  // if (errBool) {
-  // 	callback('error!', null);
-  // } else {
-  // 	callback(null, 'success saving to db!');
-  // }
-  // debugger
 }
 
 module.exports.save = save;

@@ -23,34 +23,23 @@ app.post('/repos', function (req, res) {
   	if (err) {
   		res.status(404).send('error in getting repos from github!');
   	} else {
-  		// parse data
-  		// store data in database database/index.js
 
-  		// console.log('got data from getReposByUsername!');
-  		// console.log('length of data', data.length);
-  		// console.log('name of first repo', data[0].name)
-  		// console.log('name of owner', data[0].owner.login)
-  		// console.log('url to repo', data[0].html_url)
-  		// console.log('stargazers count', data[0].stargazers_count)
+  		var saved = 0;
 
-  		// db.save(data[0], (error, result) => { // TODO: send ALL Repos, not just the first
-  		// 	if (error) {
-  		// 		res.status(404).send('error saving to db');
-  		// 	} else {
-  		// 		console.log('RESULT OF SAVING TO DB:', result);
-  		// 		res.send('success after db, sending back post request!')
-  		// 	}
-  		// })
   		data.forEach((repo) => {
   			db.save(repo, (error, result) => {
   				if (error) {
   					res.status(404).send('error saving to db');
   				} else {
   					console.log(result);
+  					saved++;
+  					if (saved === data.length) {
+  						res.send('success saving ALL repos!');
+  					}
   				}
   			});
   		});
-  		res.send('success!');
+
   	}
   })
 });

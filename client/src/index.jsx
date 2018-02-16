@@ -20,7 +20,6 @@ class App extends React.Component {
       url: 'http://localhost:1128/repos',
       method: 'POST',
       data: {username: term},
-      // contentType: 'application/json'
       success: function(result) {
         console.log('success')
         console.log(result);
