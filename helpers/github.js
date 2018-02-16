@@ -1,6 +1,5 @@
 const request = require('request');
 const config = require('../config.js');
-const db = require('../database/index.js')
 
 let getReposByUsername = (username, callback) => {
   // TODO - Use the request module to request repos for a specific
@@ -27,6 +26,9 @@ let getReposByUsername = (username, callback) => {
       var data = JSON.parse(body);
       // console.log('DATA in getReposByUsername is');
       // console.log(data);
+      // console.log('data from github should be arr of repos', Array.isArray(data));
+      // console.log('length of github repos array', data.length);
+
       callback(null, data); // data is the entire list of repo objects
     }
   });

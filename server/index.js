@@ -2,6 +2,7 @@ const express = require('express');
 let app = express();
 const github = require('../helpers/github')
 const bodyParser = require('body-parser');
+const db = require('../database/index.js')
 
 app.use(express.static(__dirname + '/../client/dist'));
 
@@ -24,18 +25,24 @@ app.post('/repos', function (req, res) {
   	} else {
   		// parse data
   		// store data in database database/index.js
-  		
-  		console.log('got data from getReposByUsername!');
-  		console.log('length of data', data.length);
-  		console.log('name of first repo', data[0].name)
-  		console.log('name of owner', data[0].owner.login)
-  		console.log('url to repo', data[0].html_url)
-  		console.log('stargazers count', data[0].stargazers_count)
 
-  		res.send('success!');
+  		// console.log('got data from getReposByUsername!');
+  		// console.log('length of data', data.length);
+  		// console.log('name of first repo', data[0].name)
+  		// console.log('name of owner', data[0].owner.login)
+  		// console.log('url to repo', data[0].html_url)
+  		// console.log('stargazers count', data[0].stargazers_count)
+
+  		db.save(data[2], (error, result) => { // TODO: send ALL Repos, not just the first
+  			if (error) {
+  				res.status(404).send('error saving to db');
+  			} else {
+  				console.log('RESULT OF SAVING TO DB:', result);
+  				res.send('success after db, sending back post request!')
+  			}
+  		})
   	}
   })
-  // res.send('sending back post request');
 });
 
 app.get('/repos', function (req, res) {
