@@ -1,7 +1,12 @@
 const express = require('express');
 let app = express();
+const github = require('../helpers/github')
+const bodyParser = require('body-parser');
 
 app.use(express.static(__dirname + '/../client/dist'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/repos', function (req, res) {
   // TODO - your code here!
@@ -9,7 +14,28 @@ app.post('/repos', function (req, res) {
   // and get the repo information from the github API, then
   // save the repo information in the database
   
-  res.send('sending back post request');
+  console.log('in post request!');
+  var username = req.body.username; // get username!
+  console.log(username);
+  
+  github.getReposByUsername(username, (err, data) => {
+  	if (err) {
+  		res.status(404).send('error in getting repos from github!');
+  	} else {
+  		// parse data
+  		// store data in database database/index.js
+  		
+  		console.log('got data from getReposByUsername!');
+  		console.log('length of data', data.length);
+  		console.log('name of first repo', data[0].name)
+  		console.log('name of owner', data[0].owner.login)
+  		console.log('url to repo', data[0].html_url)
+  		console.log('stargazers count', data[0].stargazers_count)
+
+  		res.send('success!');
+  	}
+  })
+  // res.send('sending back post request');
 });
 
 app.get('/repos', function (req, res) {
