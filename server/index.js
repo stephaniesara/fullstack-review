@@ -33,14 +33,24 @@ app.post('/repos', function (req, res) {
   		// console.log('url to repo', data[0].html_url)
   		// console.log('stargazers count', data[0].stargazers_count)
 
-  		db.save(data[2], (error, result) => { // TODO: send ALL Repos, not just the first
-  			if (error) {
-  				res.status(404).send('error saving to db');
-  			} else {
-  				console.log('RESULT OF SAVING TO DB:', result);
-  				res.send('success after db, sending back post request!')
-  			}
-  		})
+  		// db.save(data[0], (error, result) => { // TODO: send ALL Repos, not just the first
+  		// 	if (error) {
+  		// 		res.status(404).send('error saving to db');
+  		// 	} else {
+  		// 		console.log('RESULT OF SAVING TO DB:', result);
+  		// 		res.send('success after db, sending back post request!')
+  		// 	}
+  		// })
+  		data.forEach((repo) => {
+  			db.save(repo, (error, result) => {
+  				if (error) {
+  					res.status(404).send('error saving to db');
+  				} else {
+  					console.log(result);
+  				}
+  			});
+  		});
+  		res.send('success!');
   	}
   })
 });
