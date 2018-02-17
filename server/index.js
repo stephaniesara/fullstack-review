@@ -47,7 +47,18 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  res.send('sending back get request');
+
+  db.get((error, result) => {
+  	if (error) {
+  		res.status(404).send('error getting from db');
+  	} else {
+  		console.log('RESULT IS');
+  		console.log(result);
+  		res.send(result);
+  	}
+  })
+
+  // res.send('sending back get request');
 });
 
 let port = 1128;
