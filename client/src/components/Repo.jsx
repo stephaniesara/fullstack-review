@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Repo = (props) => (
+const Repo = ({repo}) => (
   <div>
-    <a href={props.repo.URL}>{props.repo.name}</a> 
-    by {props.repo.owner} 
-    has <b>{props.repo.stargazers}</b> stars
+    <a href={repo.URL}>{repo.name}</a> 
+    - by {repo.owner}
+    - <b>{repo.stargazers}</b> stars
   </div>
 )
 

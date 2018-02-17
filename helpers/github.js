@@ -19,17 +19,12 @@ let getReposByUsername = (username, callback) => {
 
   request(options, (err, res, body) => {
     if (err) {
-      console.log('error in getReposByUsername');
+      // console.log('error in getReposByUsername');
       callback(err, null);
     } else {
-      console.log('got data from Github!')
+      // console.log('got data from Github!')
       var data = JSON.parse(body);
-      // console.log('DATA in getReposByUsername is');
-      // console.log(data);
-      // console.log('data from github should be arr of repos', Array.isArray(data));
-      // console.log('length of github repos array', data.length);
-
-      callback(null, data); // data is the entire list of repo objects
+      callback(null, data);
     }
   });
 

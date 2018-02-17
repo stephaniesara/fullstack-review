@@ -10,39 +10,42 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
+    this.search = this.search.bind(this);
   }
 
   search (term) {
     console.log(`${term} was searched`);
 
     $.ajax({
-      url: 'http://localhost:1128/repos',
+      url: 'http://127.0.0.1:1128/repos',
       method: 'POST',
-      data: {username: term},
+      data: {username: term}, // ALL DATA SENT AS JSON
       success: (result) => {
         console.log('POST success')
         console.log(result);
         this.getRepos();
       },
       error: (err) => {
-        console.log('error')
+        console.log('POST error')
+        console.log(err);
       }
     });
   }
 
   getRepos() {
     $.ajax({
-      url: 'http://localhost:1128/repos',
+      url: 'http://127.0.0.1:1128/repos',
       method: 'GET',
       success: (result) => {
         console.log('GET success')
-        console.log(result);
+        // console.log(result);
         this.setState({
           repos: result
         });
       },
       error: (err) => {
-        console.log('error')
+        console.log('GET error')
+        console.log(err)
       }
     })
   }
@@ -55,7 +58,7 @@ class App extends React.Component {
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
-      <Search onSearch={this.search.bind(this)}/>
+      <Search onSearch={this.search}/>
     </div>)
   }
 }
